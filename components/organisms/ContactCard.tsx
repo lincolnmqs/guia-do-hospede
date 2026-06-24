@@ -1,19 +1,25 @@
 import { cn } from "@/lib/cn";
-import { Phone, MapPin, User } from "lucide-react";
+import { MapPin, User } from "lucide-react";
 import { SectionTitle } from "@/components/atoms/SectionTitle";
-import { formatPhoneHref } from "@/lib/format";
+import { WhatsAppIcon } from "@/components/atoms/WhatsAppIcon";
+import { formatPhoneDisplay, formatWhatsappHref } from "@/lib/format";
 import type { PropertyWithRelations } from "@/lib/db/property.repository";
 
 interface ContactCardProps {
   host: PropertyWithRelations["host"];
   address: PropertyWithRelations["address"];
+  propertyName?: string;
   className?: string;
 }
 
-export function ContactCard({ host, address, className }: ContactCardProps) {
+export function ContactCard({ host, address, propertyName, className }: ContactCardProps) {
   if (!host || !address) return null;
 
-  const phoneHref = formatPhoneHref(host.phone);
+  const phoneDisplay = formatPhoneDisplay(host.phone);
+  const whatsappHref = formatWhatsappHref(
+    host.phone,
+    `Olá! Gostaria de mais informações sobre${propertyName ? ` o imóvel "${propertyName}"` : " este imóvel"}.`,
+  );
 
   const fullAddress = [
     `${address.street}, ${address.number}${address.complement ? ` — ${address.complement}` : ""}`,
@@ -49,17 +55,19 @@ export function ContactCard({ host, address, className }: ContactCardProps) {
           </div>
 
           <a
-            href={phoneHref}
-            aria-label={`Ligar para ${host.name}`}
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Conversar com ${host.name} no WhatsApp`}
             className={cn(
               "inline-flex items-center gap-2 rounded-lg px-4 py-2.5",
-              "bg-[#0E7DA6] text-white text-sm font-semibold font-[family-name:var(--font-heading)]",
-              "hover:bg-[#0A5F80] transition-colors duration-150",
-              "focus-visible:outline-2 focus-visible:outline-[#54B3D4] focus-visible:outline-offset-2",
+              "bg-[#25D366] text-white text-sm font-semibold font-[family-name:var(--font-heading)]",
+              "hover:bg-[#1FB855] transition-colors duration-150",
+              "focus-visible:outline-2 focus-visible:outline-[#25D366] focus-visible:outline-offset-2",
             )}
           >
-            <Phone size={14} aria-hidden="true" />
-            <span>{host.phone}</span>
+            <WhatsAppIcon size={15} />
+            <span>{phoneDisplay}</span>
           </a>
         </div>
 

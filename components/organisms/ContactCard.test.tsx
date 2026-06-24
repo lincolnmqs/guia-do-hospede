@@ -22,11 +22,13 @@ describe("ContactCard", () => {
     expect(screen.getByText("Ana Paula")).toBeInTheDocument();
   });
 
-  it("renders a tel: link with the host phone", () => {
+  it("renders a WhatsApp link with the masked phone", () => {
     const host = { id: "host-1", propertyId: "prop-1", name: "Ana Paula", phone: "+5548991234567" };
     render(<ContactCard host={host} address={baseAddress} />);
-    const link = screen.getByRole("link", { name: /Ligar para Ana Paula/i });
-    expect(link).toHaveAttribute("href", "tel:+5548991234567");
+    const link = screen.getByRole("link", { name: /Conversar com Ana Paula no WhatsApp/i });
+    expect(link.getAttribute("href")).toMatch(/^https:\/\/wa\.me\/5548991234567/);
+    // phone is shown masked, not raw
+    expect(screen.getByText("+55 (48) 99123-4567")).toBeInTheDocument();
   });
 
   it("returns null when host is null", () => {

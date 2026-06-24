@@ -82,7 +82,11 @@ export function GuidePageTemplate({
               aria-hidden="true"
             />
 
-            <ContactCard host={property.host} address={property.address} />
+            <ContactCard
+              host={property.host}
+              address={property.address}
+              propertyName={property.name}
+            />
 
             {/* Experience guide island */}
             {experienceSlot && (
