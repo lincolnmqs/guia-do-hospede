@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { amenitiesSchema } from "./property";
 
 // ---------------------------------------------------------------------------
 // Schema for the seed data file (`prisma/data/properties.json`).
 //
-// Keeping property data in a JSON model and validating it here means the seed
-// script carries no literal business data — it only loads, validates and
-// persists. A malformed data file fails fast with a precise Zod error instead
-// of producing a half-populated database.
+// Kept self-contained under `prisma/` (no imports from `lib/`) so the seed runs
+// inside the runtime container, which only copies `prisma/` — not the app
+// source. Validating here means the seed carries no literal business data: it
+// only loads, validates and persists. A malformed file fails fast with a
+// precise Zod error instead of producing a half-populated database.
 // ---------------------------------------------------------------------------
 
 const time = z.string().regex(/^\d{2}:\d{2}$/, "horário deve ser HH:MM");
@@ -19,7 +19,7 @@ export const propertySeedSchema = z.object({
   bedroomQuantity: z.number().int().nonnegative(),
   bathroomQuantity: z.number().int().nonnegative(),
   guestCapacity: z.number().int().positive(),
-  amenities: amenitiesSchema,
+  amenities: z.record(z.string(), z.boolean()),
   address: z.object({
     street: z.string().min(1),
     number: z.string().min(1),
