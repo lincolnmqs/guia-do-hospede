@@ -17,11 +17,29 @@ if (!connectionString) throw new Error("DATABASE_URL is not set");
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
+// Multiple photos per property — the test asks for "Fotos do imóvel" (plural).
+// The first item is the hero image (the one from the reference data).
+const FLN001_IMAGES = [
+  "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200",
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200",
+  "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1200",
+  "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200",
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200",
+];
+
+const GRM001_IMAGES = [
+  "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1200",
+  "https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=1200",
+  "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200",
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200",
+  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200",
+];
+
 async function main() {
   // FLN001 — Apartamento Beira-Mar Florianópolis
   await prisma.property.upsert({
     where: { code: "FLN001" },
-    update: {},
+    update: { images: FLN001_IMAGES },
     create: {
       code: "FLN001",
       name: "Apartamento Beira-Mar Florianópolis",
@@ -38,9 +56,7 @@ async function main() {
         elevator: true,
         balcony: true,
       },
-      images: [
-        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
-      ],
+      images: FLN001_IMAGES,
       address: {
         create: {
           street: "Rua Lauro Linhares",
@@ -90,7 +106,7 @@ async function main() {
   // GRM001 — Chalé Serra Gramado
   await prisma.property.upsert({
     where: { code: "GRM001" },
-    update: {},
+    update: { images: GRM001_IMAGES },
     create: {
       code: "GRM001",
       name: "Chalé Serra Gramado",
@@ -106,9 +122,7 @@ async function main() {
         balcony: true,
         dishwasher: true,
       },
-      images: [
-        "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800",
-      ],
+      images: GRM001_IMAGES,
       address: {
         create: {
           street: "Rua das Hortênsias",
