@@ -74,9 +74,11 @@ export default function LandingPage() {
             <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white/5" />
             {/* Small circle bottom-left */}
             <div className="absolute bottom-0 -left-12 w-64 h-64 rounded-full bg-white/5" />
-            {/* Thin wave line */}
+            {/* Wave transition — pushed 1px past the bottom so the hero's
+                overflow-hidden clips it flush and no sub-pixel seam of the
+                gradient shows through between the wave and the section below. */}
             <svg
-              className="absolute bottom-0 left-0 w-full"
+              className="absolute -bottom-px left-0 w-full"
               viewBox="0 0 1440 56"
               preserveAspectRatio="none"
               fill="none"
@@ -92,7 +94,6 @@ export default function LandingPage() {
           <div className="relative mx-auto max-w-5xl px-4 sm:px-6 py-20 sm:py-28 text-center">
             {/* Badge */}
             <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/90 mb-6 border border-white/20">
-              <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
               Tudo sobre a sua estadia
             </div>
 
