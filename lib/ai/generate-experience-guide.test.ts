@@ -30,4 +30,33 @@ describe("getOrCreateExperienceGuide", () => {
     expect(generateContent).toHaveBeenCalledTimes(1);
     expect(saveGuide).toHaveBeenCalledTimes(1);
   });
+
+  it("handles P2002 race: saveGuide rejects with P2002, re-reads and returns the winner's row", async () => {
+    const raceRow = {
+      welcomeMessage: "x",
+      restaurants: [],
+      attractions: [],
+      essentials: [],
+      seasonalTip: "y",
+    };
+
+    // First findGuide returns null (both racers see empty DB)
+    // Second findGuide returns the winner's row
+    findGuide
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(raceRow);
+
+    generateContent.mockResolvedValue(content);
+
+    // saveGuide rejects with a P2002-like error
+    const p2002 = Object.assign(new Error("Unique constraint failed"), { code: "P2002" });
+    saveGuide.mockRejectedValue(p2002);
+
+    const result = await getOrCreateExperienceGuide(property);
+
+    expect(result).toEqual(content); // rowToContent(raceRow) === content fixture
+    expect(generateContent).toHaveBeenCalledTimes(1);
+    expect(saveGuide).toHaveBeenCalledTimes(1);
+    expect(findGuide).toHaveBeenCalledTimes(2);
+  });
 });

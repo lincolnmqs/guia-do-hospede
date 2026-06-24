@@ -70,7 +70,7 @@ describe("streamChatResponse", () => {
       ]),
     );
 
-    const stream = await streamChatResponse({
+    const stream = streamChatResponse({
       property,
       guide: null,
       messages: [{ role: "user", content: "oi" }],
@@ -92,7 +92,7 @@ describe("streamChatResponse", () => {
       ]),
     );
 
-    const stream = await streamChatResponse({
+    const stream = streamChatResponse({
       property,
       guide: null,
       messages: [{ role: "user", content: "oi" }],
@@ -109,11 +109,14 @@ describe("streamChatResponse", () => {
   it("calls openai.chat.completions.create with system message prepended", async () => {
     createMock.mockResolvedValue(makeAsyncIterable([]));
 
-    await streamChatResponse({
+    const stream = streamChatResponse({
       property,
       guide: null,
       messages: [{ role: "user", content: "oi" }],
     });
+
+    // Must consume the stream to trigger start()
+    await readStream(stream);
 
     expect(createMock).toHaveBeenCalledTimes(1);
     const call = createMock.mock.calls[0][0];
@@ -130,7 +133,7 @@ describe("streamChatResponse", () => {
 
     createMock.mockResolvedValue(errorIterable());
 
-    const stream = await streamChatResponse({
+    const stream = streamChatResponse({
       property,
       guide: null,
       messages: [{ role: "user", content: "oi" }],
@@ -138,7 +141,22 @@ describe("streamChatResponse", () => {
 
     const output = await readStream(stream);
 
-    expect(output).toContain("error");
+    expect(output).toContain(`data: ${JSON.stringify({ error: "network failure" })}`);
+    expect(output).toContain("data: [DONE]");
+  });
+
+  it("emits error SSE event and [DONE] when openai.create rejects (pre-stream auth error)", async () => {
+    createMock.mockRejectedValue(new Error("401 Unauthorized"));
+
+    const stream = streamChatResponse({
+      property,
+      guide: null,
+      messages: [{ role: "user", content: "oi" }],
+    });
+
+    const output = await readStream(stream);
+
+    expect(output).toContain(`data: ${JSON.stringify({ error: "401 Unauthorized" })}`);
     expect(output).toContain("data: [DONE]");
   });
 });

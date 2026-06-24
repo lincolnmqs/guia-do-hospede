@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { findPropertyByCode } from "@/lib/db/property.repository";
 import { getOrCreateExperienceGuide } from "@/lib/ai/generate-experience-guide";
 import { streamChatResponse } from "@/lib/ai/chat";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const messagesSchema = z
+  .array(
+    z.object({
+      role: z.enum(["user", "assistant"]),
+      content: z.string().min(1),
+    }),
+  )
+  .max(50);
 
 export async function POST(
   req: Request,
@@ -15,7 +25,11 @@ export async function POST(
   let messages: { role: "user" | "assistant"; content: string }[];
   try {
     const body = await req.json();
-    messages = body.messages ?? [];
+    const parsed = messagesSchema.safeParse(body.messages);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Requisição inválida." }, { status: 400 });
+    }
+    messages = parsed.data;
   } catch {
     return NextResponse.json(
       { error: "Corpo da requisição inválido." },
@@ -33,7 +47,7 @@ export async function POST(
 
   try {
     const guide = await getOrCreateExperienceGuide(property).catch(() => null);
-    const stream = await streamChatResponse({ property, guide, messages });
+    const stream = streamChatResponse({ property, guide, messages });
 
     return new Response(stream, {
       headers: {

@@ -28,7 +28,7 @@ function rowToContent(row: {
 }
 
 // ---------------------------------------------------------------------------
-// Idempotent get-or-create
+// Idempotent get-or-create with P2002 race handling
 // ---------------------------------------------------------------------------
 
 export async function getOrCreateExperienceGuide(
@@ -41,6 +41,24 @@ export async function getOrCreateExperienceGuide(
   }
 
   const content = await generateExperienceGuideContent(property);
-  await saveGuide(property.id, content, OPENAI_MODEL);
+
+  try {
+    await saveGuide(property.id, content, OPENAI_MODEL);
+  } catch (err: unknown) {
+    // Another concurrent request won the race and already inserted the row.
+    // Re-read the winner's row and return it instead of throwing.
+    if (
+      typeof err === "object" &&
+      err !== null &&
+      (err as { code?: string }).code === "P2002"
+    ) {
+      const winner = await findGuideByPropertyId(property.id);
+      if (winner) {
+        return rowToContent(winner);
+      }
+    }
+    throw err;
+  }
+
   return content;
 }

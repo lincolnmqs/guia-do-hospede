@@ -13,29 +13,30 @@ export interface ChatMessage {
 }
 
 // ---------------------------------------------------------------------------
-// Stream builder — shapes OpenAI async-iterable into SSE ReadableStream
+// Stream builder — shapes OpenAI async-iterable into SSE ReadableStream.
+// The OpenAI call is initiated INSIDE start() so any auth/connection error
+// surfaces as a framed SSE error event instead of a JSON 500.
 // ---------------------------------------------------------------------------
 
-export async function streamChatResponse(args: {
+export function streamChatResponse(args: {
   property: PropertyWithRelations;
   guide: ExperienceGuideContent | null;
   messages: ChatMessage[];
-}): Promise<ReadableStream<Uint8Array>> {
+}): ReadableStream<Uint8Array> {
   const { property, guide, messages } = args;
 
   const system = buildChatSystemPrompt(property, guide);
-
-  const completion = await openai.chat.completions.create({
-    model: OPENAI_MODEL,
-    stream: true,
-    messages: [{ role: "system", content: system }, ...messages],
-  });
-
   const encoder = new TextEncoder();
 
   return new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
+        const completion = await openai.chat.completions.create({
+          model: OPENAI_MODEL,
+          stream: true,
+          messages: [{ role: "system", content: system }, ...messages],
+        });
+
         for await (const chunk of completion as AsyncIterable<{
           choices: { delta: { content?: string | null } }[];
         }>) {
