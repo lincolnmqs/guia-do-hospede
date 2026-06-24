@@ -176,9 +176,13 @@ export function ChatAssistant({ code }: ChatAssistantProps) {
         {isEmpty ? (
           <EmptyState onSuggestion={sendMessage} />
         ) : (
-          messages.map((msg, i) => (
-            <ChatMessage key={i} role={msg.role} content={msg.content} />
-          ))
+          messages.map((msg, i) =>
+            // The empty trailing assistant message is the streaming placeholder —
+            // it is represented by the TypingIndicator below, not an empty bubble.
+            msg.role === "assistant" && msg.content === "" ? null : (
+              <ChatMessage key={i} role={msg.role} content={msg.content} />
+            ),
+          )
         )}
 
         {/* Typing indicator shown while streaming and the last assistant message is still empty */}
