@@ -155,28 +155,23 @@ cp .env.example .env
 # 1. Instalar dependências
 npm install
 
-# 2. Subir o PostgreSQL (se não tiver um local, use Docker)
-docker run -d \
-  --name guia-db \
-  -e POSTGRES_USER=guia \
-  -e POSTGRES_PASSWORD=guia \
-  -e POSTGRES_DB=guia \
-  -p 5432:5432 \
-  postgres:16
+# 2. Criar o .env (DATABASE_URL e OPENAI_API_KEY)
+cp .env.example .env
+#   → edite o .env e coloque sua OPENAI_API_KEY (o DATABASE_URL padrão já aponta
+#     para o Postgres do passo 3). Sem a chave, as features de IA não geram conteúdo.
 
-# 3. Executar as migrations
-npx prisma migrate deploy
-# ou, em desenvolvimento (gera migration a partir do schema):
-# npx prisma migrate dev
+# 3. Subir o Postgres (container) e rodar migrations + seed
+npm run setup
+#   = npm run db:up    (sobe o Postgres via docker compose, na porta 5432, e espera ficar saudável)
+#   + npm run db:setup (prisma migrate deploy + seed dos imóveis FLN001 e GRM001)
 
-# 4. Popular o banco com imóveis de exemplo
-npm run seed
-
-# 5. Iniciar o servidor de desenvolvimento
+# 4. Iniciar o servidor de desenvolvimento
 npm run dev
 ```
 
 Acesse [http://localhost:3000/FLN001](http://localhost:3000/FLN001) ou [http://localhost:3000/GRM001](http://localhost:3000/GRM001).
+
+> Já tem um Postgres próprio? Pule o `npm run db:up`, ajuste o `DATABASE_URL` no `.env` e rode só `npm run db:setup`. Para derrubar o banco do container: `npm run db:down`.
 
 > Na primeira visita a um imóvel, o Guia de Experiências é gerado pela OpenAI e salvo no banco. As visitas seguintes servem o conteúdo diretamente do banco (sem nova chamada à API).
 
