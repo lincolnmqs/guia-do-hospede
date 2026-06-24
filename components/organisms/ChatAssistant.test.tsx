@@ -8,8 +8,10 @@ vi.mock("@/lib/hooks/useChatStream", () => ({
 }));
 
 beforeAll(() => {
-  // jsdom does not implement scrollIntoView (used by the auto-scroll effect)
+  // jsdom implements neither scrollIntoView nor Element.scrollTo (used by the
+  // chat auto-scroll effect) — stub them so rendering doesn't throw.
   window.HTMLElement.prototype.scrollIntoView = vi.fn();
+  window.HTMLElement.prototype.scrollTo = vi.fn();
 });
 
 afterEach(cleanup);

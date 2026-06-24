@@ -116,11 +116,15 @@ interface ChatAssistantProps {
 
 export function ChatAssistant({ code }: ChatAssistantProps) {
   const { messages, isStreaming, sendMessage } = useChatStream({ code });
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to latest message whenever messages change or streaming starts
+  // Auto-scroll to the latest message — but only once a conversation has
+  // started, and only the chat's own scroll container (never the page, which
+  // on mobile would yank the whole page down to the chat on load).
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length === 0) return;
+    const list = listRef.current;
+    if (list) list.scrollTo({ top: list.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
 
   const isEmpty = messages.length === 0;
@@ -168,6 +172,7 @@ export function ChatAssistant({ code }: ChatAssistantProps) {
 
       {/* Message list */}
       <div
+        ref={listRef}
         aria-live="polite"
         aria-label="Conversa com o assistente"
         className="flex min-h-[280px] flex-1 flex-col gap-4 overflow-y-auto px-5 py-5"
@@ -192,9 +197,6 @@ export function ChatAssistant({ code }: ChatAssistantProps) {
           messages[messages.length - 1].content === "" && (
             <TypingIndicator />
           )}
-
-        {/* Scroll anchor */}
-        <div ref={bottomRef} aria-hidden="true" />
       </div>
 
       {/* Input area */}
