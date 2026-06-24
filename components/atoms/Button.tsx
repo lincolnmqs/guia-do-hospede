@@ -1,4 +1,5 @@
 import { cn } from "@/lib/cn";
+import { forwardRef } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
@@ -21,15 +22,13 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: "px-7 py-3 text-base",
 };
 
-export function Button({
-  variant = "primary",
-  size = "md",
-  children,
-  className,
-  ...props
-}: ButtonProps) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { variant = "primary", size = "md", children, className, ...props },
+  ref,
+) {
   return (
     <button
+      ref={ref}
       className={cn(
         "inline-flex items-center justify-center gap-2 rounded-lg font-semibold font-[family-name:var(--font-heading)]",
         "transition-all duration-150 cursor-pointer",
@@ -44,4 +43,4 @@ export function Button({
       {children}
     </button>
   );
-}
+});
