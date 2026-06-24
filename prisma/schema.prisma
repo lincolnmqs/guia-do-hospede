@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Property {
+  id               String   @id @default(cuid())
+  code             String   @unique // ex: "FLN001"
+  name             String
+  propertyType     String
+  bedroomQuantity  Int
+  bathroomQuantity Int
+  guestCapacity    Int
+  amenities        Json // { wifi: true, bbq_grill: true, ... } (chaves variam por imóvel)
+  images           String[]
+  address          Address?
+  operational      Operational?
+  rules            Rules?
+  host             Host?
+  experienceGuide  ExperienceGuide?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Address {
+  id           String   @id @default(cuid())
+  propertyId   String   @unique
+  property     Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  postalCode   String
+}
+
+model Operational {
+  id                         String   @id @default(cuid())
+  propertyId                 String   @unique
+  property                   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  wifiNetwork                String
+  wifiPassword               String
+  isSelfCheckin              Boolean
+  propertyAccessType         String // smart_lock | keybox | ...
+  propertyAccessInstructions String
+  propertyPassword           String?
+  hasParkingSpot             Boolean
+  parkingSpotIdentifier      String?
+  parkingSpotInstructions    String?
+}
+
+model Rules {
+  id                  String   @id @default(cuid())
+  propertyId          String   @unique
+  property            Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  checkInTime         String
+  checkOutTime        String
+  allowPet            Boolean
+  smokingPermitted    Boolean
+  suitableForChildren Boolean
+  suitableForBabies   Boolean
+  eventsPermitted     Boolean
+}
+
+model Host {
+  id         String   @id @default(cuid())
+  propertyId String   @unique
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  name       String
+  phone      String
+}
+
+model ExperienceGuide {
+  id             String   @id @default(cuid())
+  propertyId     String   @unique
+  property       Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  welcomeMessage String
+  restaurants    Json // [{ name, distance, description }]
+  attractions    Json // [{ name, distance, description }]
+  essentials     Json // [{ name, type, distance, description }]
+  seasonalTip    String
+  model          String // modelo OpenAI usado
+  generatedAt    DateTime @default(now())
+}
