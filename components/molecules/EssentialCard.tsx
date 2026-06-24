@@ -52,6 +52,7 @@ export function EssentialCard({ name, distance, description, type, className }: 
           aria-hidden="true"
           className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#EBF6FA]"
         >
+          {/* eslint-disable-next-line react-hooks/static-components */}
           <Icon size={16} className="text-[#0E7DA6]" />
         </span>
         <div className="min-w-0 flex-1">

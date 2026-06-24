@@ -5,14 +5,6 @@ import { IconText } from "@/components/atoms/IconText";
 import { AmenityItem } from "@/components/molecules/AmenityItem";
 import type { PropertyWithRelations } from "@/lib/db/property.repository";
 
-const PROPERTY_TYPE_LABELS: Record<string, string> = {
-  apartment: "Apartamento",
-  house:     "Casa",
-  studio:    "Studio",
-  villa:     "Vila",
-  cottage:   "Chalé",
-};
-
 interface PropertyDetailsProps {
   property: PropertyWithRelations;
   className?: string;
@@ -20,8 +12,6 @@ interface PropertyDetailsProps {
 
 export function PropertyDetails({ property, className }: PropertyDetailsProps) {
   const { name, propertyType, guestCapacity, bedroomQuantity, bathroomQuantity, address, amenities } = property;
-
-  const typeLabel = PROPERTY_TYPE_LABELS[propertyType] ?? propertyType;
   const location  = address ? `${address.city}, ${address.state}` : "";
 
   const amenityEntries = amenities
@@ -41,7 +31,7 @@ export function PropertyDetails({ property, className }: PropertyDetailsProps) {
             </h1>
             <div className="mt-1.5 flex flex-wrap items-center gap-2 text-sm text-[#64748B]">
               <span className="font-medium text-[#54B3D4] font-[family-name:var(--font-heading)]">
-                {typeLabel}
+                {propertyType}
               </span>
               <span aria-hidden="true" className="text-[#CBD5E1]">·</span>
               <span className="flex items-center gap-1">

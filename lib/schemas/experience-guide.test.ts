@@ -19,7 +19,8 @@ describe("experienceGuideContentSchema", () => {
     ).toThrow();
   });
   it("rejects missing seasonal tip", () => {
-    const { seasonal_tip, ...rest } = valid;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { seasonal_tip: _tip, ...rest } = valid;
     expect(() => experienceGuideContentSchema.parse(rest)).toThrow();
   });
 });

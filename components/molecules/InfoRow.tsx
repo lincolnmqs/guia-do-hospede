@@ -6,7 +6,6 @@ interface InfoRowProps {
   label: string;
   value: React.ReactNode;
   className?: string;
-  copyable?: boolean;
 }
 
 export function InfoRow({ icon: Icon, label, value, className }: InfoRowProps) {

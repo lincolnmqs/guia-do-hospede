@@ -169,9 +169,10 @@ function SeasonalTip({ tip }: { tip: string }) {
 export function ExperienceGuide({ code }: ExperienceGuideProps) {
   const [state, setState] = useState<GuideState>({ status: "loading" });
 
+  // Initiates the network call; does NOT set loading state (caller's responsibility).
+  // Returns the AbortController so callers can cancel.
   const fetchGuide = useCallback(() => {
     const controller = new AbortController();
-    setState({ status: "loading" });
 
     fetch(`/api/properties/${code}/experience-guide`, {
       signal: controller.signal,
@@ -199,9 +200,16 @@ export function ExperienceGuide({ code }: ExperienceGuideProps) {
     return controller;
   }, [code]);
 
+  // On mount: initial state is already "loading", just kick off the fetch.
   useEffect(() => {
     const controller = fetchGuide();
     return () => controller.abort();
+  }, [fetchGuide]);
+
+  // Retry handler: reset to loading, then re-fetch.
+  const handleRetry = useCallback(() => {
+    setState({ status: "loading" });
+    fetchGuide();
   }, [fetchGuide]);
 
   if (state.status === "loading") {
@@ -209,7 +217,7 @@ export function ExperienceGuide({ code }: ExperienceGuideProps) {
   }
 
   if (state.status === "error") {
-    return <ErrorCard message={state.message} onRetry={fetchGuide} />;
+    return <ErrorCard message={state.message} onRetry={handleRetry} />;
   }
 
   const { data } = state;
