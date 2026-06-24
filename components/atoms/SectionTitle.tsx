@@ -13,7 +13,7 @@ export function SectionTitle({ children, subtitle, className, id }: SectionTitle
       <h2
         id={id}
         className={cn(
-          "font-[family-name:var(--font-heading)] font-700 text-xl sm:text-2xl text-[#0A5F80]",
+          "font-[family-name:var(--font-heading)] font-bold text-xl sm:text-2xl text-[#0A5F80]",
           "tracking-tight leading-tight",
         )}
       >
