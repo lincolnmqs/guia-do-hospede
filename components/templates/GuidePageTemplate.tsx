@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/cn";
 import type { ReactNode } from "react";
 import type { PropertyWithRelations } from "@/lib/db/property.repository";
@@ -31,9 +33,20 @@ export function GuidePageTemplate({
       {/* Top bar */}
       <header className="bg-white border-b border-[#E2EAF0] sticky top-0 z-20 shadow-[0_1px_4px_0_rgb(14_125_166_/_0.06)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 h-14 flex items-center justify-between">
-          <span className="font-[family-name:var(--font-heading)] font-bold text-[#0E7DA6] text-lg tracking-tight">
-            Seazone
-          </span>
+          <Link
+            href="/"
+            aria-label="Voltar para a página inicial"
+            className="group flex items-center gap-2 rounded-md -ml-1 px-1 py-1 transition-colors hover:bg-[#F7F9FB] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#54B3D4]"
+          >
+            <ArrowLeft
+              size={18}
+              aria-hidden="true"
+              className="text-[#64748B] transition-colors group-hover:text-[#0E7DA6]"
+            />
+            <span className="font-[family-name:var(--font-heading)] font-bold text-[#0E7DA6] text-lg tracking-tight">
+              Seazone
+            </span>
+          </Link>
           <span className="text-xs text-[#64748B] font-[family-name:var(--font-body)] hidden sm:block">
             Guia do Hóspede
           </span>
