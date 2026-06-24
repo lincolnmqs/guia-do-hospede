@@ -4,7 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import {
   propertySeedListSchema,
   type PropertySeed,
-} from "../lib/schemas/property-seed";
+} from "./property-seed.schema";
 
 // When run standalone for local development (`npm run seed`), load `.env` so
 // DATABASE_URL is available. In Docker the variable is already injected by
