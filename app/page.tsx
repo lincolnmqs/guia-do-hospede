@@ -74,6 +74,19 @@ export default function LandingPage() {
             <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white/5" />
             {/* Small circle bottom-left */}
             <div className="absolute bottom-0 -left-12 w-64 h-64 rounded-full bg-white/5" />
+            {/* Thin wave line */}
+            <svg
+              className="absolute bottom-0 left-0 w-full"
+              viewBox="0 0 1440 56"
+              preserveAspectRatio="none"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 24 C360 2 1080 2 1440 24 L1440 56 L0 56Z"
+                fill="#F7F9FB"
+              />
+            </svg>
           </div>
 
           <div className="relative mx-auto max-w-5xl px-4 sm:px-6 py-20 sm:py-28 text-center">
