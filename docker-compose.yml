@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:16
+    container_name: guia-db
     environment:
       POSTGRES_USER: guia
       POSTGRES_PASSWORD: guia
@@ -19,6 +20,7 @@ services:
 
   app:
     build: .
+    container_name: guia-app
     depends_on:
       db:
         condition: service_healthy
