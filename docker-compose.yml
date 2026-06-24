@@ -5,6 +5,10 @@ services:
       POSTGRES_USER: guia
       POSTGRES_PASSWORD: guia
       POSTGRES_DB: guia
+    # Exposed on the host so local `npm run dev` (outside Docker) can connect
+    # at localhost:5432, matching DATABASE_URL in .env.example.
+    ports:
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:

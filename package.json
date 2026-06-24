@@ -11,7 +11,11 @@
     "test:watch": "vitest",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "db:setup": "prisma migrate deploy && npm run seed",
+    "setup": "npm run db:up && npm run db:setup"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",

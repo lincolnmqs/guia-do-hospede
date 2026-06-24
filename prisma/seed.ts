@@ -1,6 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
+// When run standalone for local development (`npm run seed`), load `.env` so
+// DATABASE_URL is available. In Docker the variable is already injected by
+// compose, so this no-ops (the guard skips loading).
+if (!process.env.DATABASE_URL) {
+  try {
+    process.loadEnvFile(".env");
+  } catch {
+    // no .env file — fall through to the explicit error below
+  }
+}
+
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is not set");
 const adapter = new PrismaPg({ connectionString });
