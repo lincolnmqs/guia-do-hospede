@@ -139,9 +139,13 @@ describe("streamChatResponse", () => {
       messages: [{ role: "user", content: "oi" }],
     });
 
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const output = await readStream(stream);
+    errorSpy.mockRestore();
 
-    expect(output).toContain(`data: ${JSON.stringify({ error: "network failure" })}`);
+    // The guest gets a generic message — the raw cause must NOT leak.
+    expect(output).toContain("Não consegui responder agora");
+    expect(output).not.toContain("network failure");
     expect(output).toContain("data: [DONE]");
   });
 
@@ -154,9 +158,13 @@ describe("streamChatResponse", () => {
       messages: [{ role: "user", content: "oi" }],
     });
 
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const output = await readStream(stream);
+    errorSpy.mockRestore();
 
-    expect(output).toContain(`data: ${JSON.stringify({ error: "401 Unauthorized" })}`);
+    // Internal auth/infra details must never reach the client.
+    expect(output).toContain("Não consegui responder agora");
+    expect(output).not.toContain("401 Unauthorized");
     expect(output).toContain("data: [DONE]");
   });
 });
