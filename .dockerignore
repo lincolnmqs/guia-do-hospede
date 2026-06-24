@@ -1,12 +1,34 @@
+# deps & build output (reinstalled/rebuilt in-image)
 node_modules
 .next
+out
+
+# vcs & local tooling
 .git
+.gitignore
+.claude
+.sdd
+.superpowers
+docs
+
+# env & secrets (injected at runtime, never baked in)
 .env
 .env.local
 .env*.local
+
+# tests (not needed to build or run; eslint.config.mjs is kept because
+# `next build` runs ESLint)
+**/*.test.ts
+**/*.test.tsx
+tests
+vitest.config.ts
+
+# misc
+*.tsbuildinfo
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.sdd
-.superpowers
-*.log
+Dockerfile
+docker-compose.yml
+README.md
