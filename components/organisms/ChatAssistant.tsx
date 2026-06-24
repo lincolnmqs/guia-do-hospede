@@ -200,9 +200,6 @@ export function ChatAssistant({ code }: ChatAssistantProps) {
       {/* Input area */}
       <div className="border-t border-[#E2EAF0] bg-[#F7F9FB] px-4 py-4">
         <ChatInput onSend={sendMessage} disabled={isStreaming} />
-        <p className="mt-2 text-center text-[10px] font-[family-name:var(--font-body)] text-[#94A3B8]">
-          As respostas são geradas por IA e podem conter imprecisões.
-        </p>
       </div>
     </section>
   );

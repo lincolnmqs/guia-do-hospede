@@ -93,7 +93,7 @@ export default function LandingPage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/90 mb-6 border border-white/20">
               <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-              Powered by IA
+              Tudo sobre a sua estadia
             </div>
 
             <h1 className="font-[family-name:var(--font-heading)] font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight mb-6">
