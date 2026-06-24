@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    container_name: guia-db
+    environment:
+      POSTGRES_USER: guia
+      POSTGRES_PASSWORD: guia
+      POSTGRES_DB: guia
+    # Exposed on the host so local `npm run dev` (outside Docker) can connect
+    # at localhost:5432, matching DATABASE_URL in .env.example.
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U guia"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    container_name: guia-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://guia:guia@db:5432/guia?schema=public
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata: {}

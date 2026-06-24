@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
+/* ─── Seazone Design Tokens ──────────────────────────────────────────────── */
+@theme {
+  /* Palette */
+  --color-sz-sky:        #54B3D4;
+  --color-sz-ocean:      #0E7DA6;
+  --color-sz-deep:       #0A5F80;
+  --color-sz-surface:    #F7F9FB;
+  --color-sz-white:      #FFFFFF;
+  --color-sz-charcoal:   #1F2933;
+  --color-sz-ink:        #334155;
+  --color-sz-muted:      #64748B;
+  --color-sz-border:     #E2EAF0;
+  --color-sz-card:       #FFFFFF;
+
+  /* Semantic states */
+  --color-sz-permitted:  #16A34A;
+  --color-sz-forbidden:  #DC2626;
+  --color-sz-warning:    #D97706;
+
+  /* Badge fills */
+  --color-sz-permitted-bg: #DCFCE7;
+  --color-sz-forbidden-bg: #FEE2E2;
+  --color-sz-warning-bg:   #FEF3C7;
+
+  /* Typography scale */
+  --font-heading: var(--font-sora);
+  --font-body:    var(--font-dm-sans);
+
+  /* Radii */
+  --radius-card:   0.875rem;
+  --radius-badge:  9999px;
+  --radius-button: 0.5rem;
+
+  /* Shadows */
+  --shadow-card:  0 2px 12px 0 rgb(14 125 166 / 0.07), 0 1px 3px 0 rgb(0 0 0 / 0.04);
+  --shadow-hover: 0 8px 24px 0 rgb(14 125 166 / 0.13), 0 2px 6px 0 rgb(0 0 0 / 0.06);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-sz-surface);
+  --foreground: var(--color-sz-charcoal);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Focus ring — ocean blue, not browser default */
+:focus-visible {
+  outline: 2px solid var(--color-sz-sky);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Scroll bar (subtle) ────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-sz-border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-sz-sky); }

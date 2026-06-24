@@ -6,19 +6,28 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "db:setup": "prisma migrate deploy && npm run seed",
+    "setup": "npm run db:up && npm run db:setup"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.21.0",
     "next": "16.2.9",
     "openai": "^6.44.0",
+    "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -27,6 +36,7 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20.19.43",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.3",
@@ -35,6 +45,7 @@
     "jsdom": "^29.1.1",
     "prisma": "^7.8.0",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5",
     "vitest": "^4.1.9"
   }
