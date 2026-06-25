@@ -1,14 +1,20 @@
 import { findGuideByPropertyId, saveGuide } from "@/lib/db/experience-guide.repository";
 import { generateExperienceGuideContent } from "./generate-content";
+import { OPENAI_MODEL } from "./config";
 import type { PropertyWithRelations } from "@/lib/db/property.repository";
-import type { ExperienceGuideContent } from "@/lib/schemas/experience-guide";
-
-// Read model name here so we don't import the OpenAI singleton (which requires a
-// real environment) into this orchestration module.
-const OPENAI_MODEL = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+import {
+  storedExperienceGuideSchema,
+  type ExperienceGuideContent,
+} from "@/lib/schemas/experience-guide";
 
 // ---------------------------------------------------------------------------
 // DB-row → ExperienceGuideContent (camelCase → snake_case)
+//
+// The JSONB columns (restaurants/attractions/essentials) come back as `unknown`,
+// so we validate the assembled shape against the storage schema instead of
+// casting — a structurally malformed row surfaces as a thrown error the caller
+// can handle (regenerate or 502) rather than silently reaching the client. The
+// storage schema omits generation quotas so a valid legacy row still renders.
 // ---------------------------------------------------------------------------
 
 function rowToContent(row: {
@@ -18,13 +24,13 @@ function rowToContent(row: {
   essentials: unknown;
   seasonalTip: string;
 }): ExperienceGuideContent {
-  return {
+  return storedExperienceGuideSchema.parse({
     welcome_message: row.welcomeMessage,
-    restaurants: row.restaurants as ExperienceGuideContent["restaurants"],
-    attractions: row.attractions as ExperienceGuideContent["attractions"],
-    essentials: row.essentials as ExperienceGuideContent["essentials"],
+    restaurants: row.restaurants,
+    attractions: row.attractions,
+    essentials: row.essentials,
     seasonal_tip: row.seasonalTip,
-  };
+  });
 }
 
 // ---------------------------------------------------------------------------

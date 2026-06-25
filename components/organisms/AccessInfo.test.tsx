@@ -44,6 +44,14 @@ describe("AccessInfo", () => {
     expect(screen.getByText("SeazoneGuest")).toBeInTheDocument();
   });
 
+  it("maps the 'keybox' access type to a friendly label (not the raw value)", () => {
+    render(
+      <AccessInfo operational={{ ...baseOperational, propertyAccessType: "keybox" }} />
+    );
+    expect(screen.getByText("Cofre de chaves")).toBeInTheDocument();
+    expect(screen.queryByText("keybox")).not.toBeInTheDocument();
+  });
+
   it("returns null when operational is null", () => {
     const { container } = render(<AccessInfo operational={null} />);
     expect(container.firstChild).toBeNull();

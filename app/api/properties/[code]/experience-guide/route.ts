@@ -19,7 +19,8 @@ export async function GET(
   try {
     const guide = await getOrCreateExperienceGuide(property);
     return NextResponse.json(guide);
-  } catch {
+  } catch (err) {
+    console.error(`[experience-guide] generation failed for ${code}:`, err);
     return NextResponse.json(
       { error: "Falha ao gerar o guia. Tente novamente." },
       { status: 502 },
