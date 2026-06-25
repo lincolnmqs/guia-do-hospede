@@ -1,4 +1,5 @@
-import { openai, OPENAI_MODEL } from "./client";
+import { openai } from "./client";
+import { OPENAI_MODEL } from "./config";
 import { buildExperienceGuidePrompt } from "./prompts";
 import {
   experienceGuideContentSchema,

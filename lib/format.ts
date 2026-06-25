@@ -38,3 +38,12 @@ export const formatWhatsappHref = (phone: string, message?: string): string => {
   const base = `https://wa.me/${digits}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 };
+
+/**
+ * Builds a Google Maps link that searches for the given address. Uses the
+ * documented Maps URL API (search by free-text query), which resolves the
+ * address on Google's side and works on web, Android and iOS without needing
+ * coordinates.
+ */
+export const googleMapsHref = (query: string): string =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;

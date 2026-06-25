@@ -1,6 +1,5 @@
 import OpenAI from "openai";
 
-export const OPENAI_MODEL = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
 // Provide a placeholder key so the constructor never throws when the key is
 // missing OR empty (docker-compose passes OPENAI_API_KEY as "" when the host
 // var is unset). `||` (not `??`) treats an empty string as absent, so the

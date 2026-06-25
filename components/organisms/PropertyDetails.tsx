@@ -4,6 +4,7 @@ import { SectionTitle } from "@/components/atoms/SectionTitle";
 import { IconText } from "@/components/atoms/IconText";
 import { AmenityItem } from "@/components/molecules/AmenityItem";
 import type { PropertyWithRelations } from "@/lib/db/property.repository";
+import { parseAmenities } from "@/lib/schemas/property";
 
 interface PropertyDetailsProps {
   property: PropertyWithRelations;
@@ -14,9 +15,7 @@ export function PropertyDetails({ property, className }: PropertyDetailsProps) {
   const { name, propertyType, guestCapacity, bedroomQuantity, bathroomQuantity, address, amenities } = property;
   const location  = address ? `${address.city}, ${address.state}` : "";
 
-  const amenityEntries = amenities
-    ? Object.entries(amenities as Record<string, boolean>)
-    : [];
+  const amenityEntries = Object.entries(parseAmenities(amenities));
 
   return (
     <section className={cn("space-y-6", className)} aria-labelledby="property-details-title">

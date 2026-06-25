@@ -31,6 +31,19 @@ describe("ContactCard", () => {
     expect(screen.getByText("+55 (48) 99123-4567")).toBeInTheDocument();
   });
 
+  it("renders the full address as a Google Maps link opening in a new tab", () => {
+    const host = { id: "host-1", propertyId: "prop-1", name: "Ana Paula", phone: "+5548991234567" };
+    render(<ContactCard host={host} address={baseAddress} />);
+    const link = screen.getByRole("link", { name: /Abrir endereço no Google Maps/i });
+    const href = link.getAttribute("href") ?? "";
+    expect(href).toMatch(/^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=/);
+    // the address parts are URL-encoded into the query
+    expect(decodeURIComponent(href)).toContain("Rua das Flores, 100");
+    expect(decodeURIComponent(href)).toContain("Florianópolis — SC");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   it("returns null when host is null", () => {
     const { container } = render(
       <ContactCard host={null} address={baseAddress} />
