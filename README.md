@@ -6,7 +6,7 @@ Plataforma web que entrega a cada hóspede um guia personalizado e enriquecido p
 
 ## Demo
 
-> **URL pública:** `https://guia-do-hospede.example.com` _(substitua pelo seu domínio após o deploy)_
+> **URL pública:** `https://guia-do-hospede.projectsync.com.br`
 
 Imóveis de exemplo disponíveis após rodar o seed:
 
