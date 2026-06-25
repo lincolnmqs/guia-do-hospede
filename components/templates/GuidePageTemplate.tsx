@@ -8,6 +8,7 @@ import { PropertyDetails } from "@/components/organisms/PropertyDetails";
 import { AccessInfo } from "@/components/organisms/AccessInfo";
 import { StayRules } from "@/components/organisms/StayRules";
 import { ContactCard } from "@/components/organisms/ContactCard";
+import { parseImages } from "@/lib/schemas/property";
 
 interface GuidePageTemplateProps {
   property: PropertyWithRelations;
@@ -24,9 +25,7 @@ export function GuidePageTemplate({
   chatSlot,
   className,
 }: GuidePageTemplateProps) {
-  const images = Array.isArray(property.images)
-    ? (property.images as string[])
-    : [];
+  const images = parseImages(property.images);
 
   return (
     <div className={cn("min-h-screen bg-[#F7F9FB]", className)}>

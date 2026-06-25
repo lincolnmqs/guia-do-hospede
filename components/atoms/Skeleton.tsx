@@ -1,10 +1,9 @@
+import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/cn";
 
-interface SkeletonProps {
-  className?: string;
-}
+type SkeletonProps = ComponentPropsWithoutRef<"div">;
 
-export function Skeleton({ className }: SkeletonProps) {
+export function Skeleton({ className, ...rest }: SkeletonProps) {
   return (
     <div
       aria-hidden="true"
@@ -15,6 +14,7 @@ export function Skeleton({ className }: SkeletonProps) {
       style={{
         animation: "skeleton-shimmer 1.5s ease-in-out infinite",
       }}
+      {...rest}
     />
   );
 }

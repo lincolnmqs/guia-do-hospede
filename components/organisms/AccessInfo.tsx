@@ -9,10 +9,13 @@ interface AccessInfoProps {
   className?: string;
 }
 
+// Keys mirror the values stored in `operational.propertyAccessType`
+// (see the reference data / seed): "smart_lock", "keybox", etc.
 const ACCESS_TYPE_LABELS: Record<string, string> = {
   key:           "Chave física",
   smart_lock:    "Fechadura inteligente",
-  key_box:       "Cofre de chave",
+  keybox:        "Cofre de chaves",
+  key_box:       "Cofre de chaves",
   host_handover: "Entrega pelo anfitrião",
 };
 

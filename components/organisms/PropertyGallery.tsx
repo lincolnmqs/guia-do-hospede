@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
-import { ImageOff, ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
+import { Skeleton } from "@/components/atoms/Skeleton";
+import { ImageOff, ChevronLeft, ChevronRight, X, Expand, Loader2 } from "lucide-react";
 
 interface PropertyGalleryProps {
   images: string[];
@@ -85,7 +86,7 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
           aria-label={`Ampliar fotos de ${name}`}
           className="group block sm:hidden relative w-full h-72 cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#00143D]"
         >
-          <Image src={primary} alt={`Foto principal de ${name}`} fill className="object-cover" priority sizes="100vw" />
+          <GalleryImage src={primary} alt={`Foto principal de ${name}`} priority sizes="100vw" />
           <ZoomHint />
           {images.length > 1 && <CountPill count={images.length} />}
         </button>
@@ -101,13 +102,12 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
             aria-label={`Ampliar foto principal de ${name}`}
             className="group relative overflow-hidden rounded-l-[0.875rem] cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#00143D]"
           >
-            <Image
+            <GalleryImage
               src={primary}
               alt={`Foto principal de ${name}`}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
               priority
               sizes="(min-width: 640px) 66vw"
+              imgClassName="group-hover:scale-[1.02]"
             />
             <ZoomHint />
           </button>
@@ -133,12 +133,11 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
                       isLast && "rounded-br-[0.875rem]",
                     )}
                   >
-                    <Image
+                    <GalleryImage
                       src={src}
                       alt={`Foto ${i + 2} de ${name}`}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       sizes="(min-width: 640px) 33vw"
+                      imgClassName="group-hover:scale-[1.02]"
                     />
                     {showOverlay ? (
                       <span className="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-[family-name:var(--font-heading)] font-bold text-lg">
@@ -201,13 +200,14 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
             className="relative h-[80vh] w-[92vw] max-w-5xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
+            <GalleryImage
+              key={lightboxIndex}
               src={images[lightboxIndex]}
               alt={`Foto ${lightboxIndex + 1} de ${name}`}
-              fill
-              className="object-contain"
               sizes="92vw"
               priority
+              imgClassName="object-contain"
+              placeholder="spinner"
             />
           </div>
 
@@ -228,6 +228,70 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
         </div>
       )}
     </div>
+  );
+}
+
+/* next/image renders nothing until the remote MinIO bytes arrive. This wrapper
+   keeps a placeholder in the slot while the photo loads, fades it in once ready,
+   and degrades to a clear "unavailable" state if the object can't be fetched. */
+function GalleryImage({
+  src,
+  alt,
+  sizes,
+  priority,
+  imgClassName,
+  placeholder = "skeleton",
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  priority?: boolean;
+  imgClassName?: string;
+  placeholder?: "skeleton" | "spinner";
+}) {
+  const [status, setStatus] = useState<"loading" | "loaded" | "error">("loading");
+
+  if (status === "error") {
+    return (
+      <span className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-[#E2EAF0] text-[#64748B]">
+        <ImageOff size={26} aria-hidden="true" />
+        <span className="text-xs font-[family-name:var(--font-body)]">Imagem indisponível</span>
+      </span>
+    );
+  }
+
+  return (
+    <>
+      {status === "loading" &&
+        (placeholder === "spinner" ? (
+          <span
+            data-testid="gallery-image-placeholder"
+            aria-hidden="true"
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <Loader2 size={28} className="animate-spin text-white/70" />
+          </span>
+        ) : (
+          <Skeleton
+            data-testid="gallery-image-placeholder"
+            className="absolute inset-0 rounded-none"
+          />
+        ))}
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        priority={priority}
+        onLoad={() => setStatus("loaded")}
+        onError={() => setStatus("error")}
+        className={cn(
+          "object-cover transition duration-500",
+          status === "loaded" ? "opacity-100" : "opacity-0",
+          imgClassName,
+        )}
+      />
+    </>
   );
 }
 
