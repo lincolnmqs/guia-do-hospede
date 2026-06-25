@@ -1,8 +1,8 @@
 import { cn } from "@/lib/cn";
-import { MapPin, User } from "lucide-react";
+import { MapPin, User, ExternalLink } from "lucide-react";
 import { SectionTitle } from "@/components/atoms/SectionTitle";
 import { WhatsAppIcon } from "@/components/atoms/WhatsAppIcon";
-import { formatPhoneDisplay, formatWhatsappHref } from "@/lib/format";
+import { formatPhoneDisplay, formatWhatsappHref, googleMapsHref } from "@/lib/format";
 import type { PropertyWithRelations } from "@/lib/db/property.repository";
 
 interface ContactCardProps {
@@ -71,20 +71,41 @@ export function ContactCard({ host, address, propertyName, className }: ContactC
           </a>
         </div>
 
-        {/* Address block */}
-        <div className="px-5 py-4">
-          <div className="flex items-start gap-3">
-            <span
-              aria-hidden="true"
-              className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#EBF6FA]"
-            >
-              <MapPin size={14} className="text-[#0E7DA6]" />
-            </span>
-            <address className="not-italic text-sm text-[#334155] font-[family-name:var(--font-body)] leading-relaxed">
-              {fullAddress}
-            </address>
-          </div>
-        </div>
+        {/* Address block — opens the location in Google Maps */}
+        <a
+          href={googleMapsHref(fullAddress)}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Abrir endereço no Google Maps (abre em nova aba): ${fullAddress}`}
+          className={cn(
+            "group flex items-start gap-3 px-5 py-4",
+            "transition-colors duration-150 hover:bg-[#F7F9FB]",
+            "focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#54B3D4]",
+          )}
+        >
+          <span
+            aria-hidden="true"
+            className={cn(
+              "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg",
+              "bg-[#EBF6FA] transition-colors duration-150 group-hover:bg-[#0E7DA6]",
+            )}
+          >
+            <MapPin
+              size={14}
+              className="text-[#0E7DA6] transition-colors duration-150 group-hover:text-white"
+            />
+          </span>
+          <address className="not-italic text-sm text-[#334155] font-[family-name:var(--font-body)] leading-relaxed">
+            {fullAddress}
+          </address>
+          <span
+            aria-hidden="true"
+            className="ml-auto mt-0.5 flex items-center gap-1 shrink-0 text-xs font-[family-name:var(--font-heading)] font-semibold text-[#94A3B8] transition-colors duration-150 group-hover:text-[#0E7DA6]"
+          >
+            <span className="hidden sm:inline">Ver no mapa</span>
+            <ExternalLink size={13} />
+          </span>
+        </a>
       </div>
     </section>
   );
