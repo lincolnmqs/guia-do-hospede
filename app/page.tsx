@@ -92,11 +92,6 @@ export default function LandingPage() {
           </div>
 
           <div className="relative mx-auto max-w-5xl px-4 sm:px-6 py-20 sm:py-28 text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/90 mb-6 border border-white/20">
-              Tudo sobre a sua estadia
-            </div>
-
             <h1 className="font-[family-name:var(--font-heading)] font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight mb-6">
               Seu Guia Digital
               <br />
