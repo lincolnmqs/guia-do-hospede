@@ -9,7 +9,7 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  primary:   "bg-[#EBF6FA] text-[#0E7DA6] border border-[#B3DCEC]",
+  primary:   "bg-[#EEF2F8] text-[#00143D] border border-[#B3DCEC]",
   permitted: "bg-[#DCFCE7] text-[#16A34A] border border-[#BBF7D0]",
   forbidden: "bg-[#FEE2E2] text-[#DC2626] border border-[#FECACA]",
   warning:   "bg-[#FEF3C7] text-[#D97706] border border-[#FDE68A]",

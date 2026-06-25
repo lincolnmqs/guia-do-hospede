@@ -34,13 +34,13 @@ export function ContactCard({ host, address, propertyName, className }: ContactC
         Contato &amp; Localização
       </SectionTitle>
 
-      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]">
+      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]">
         {/* Host block */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-5 py-5 border-b border-[#E2EAF0]">
           <div className="flex items-center gap-3">
             <span
               aria-hidden="true"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#54B3D4] to-[#0E7DA6] text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#00143D] to-[#00143D] text-white"
             >
               <User size={18} />
             </span>
@@ -76,9 +76,9 @@ export function ContactCard({ host, address, propertyName, className }: ContactC
           <div className="flex items-start gap-3">
             <span
               aria-hidden="true"
-              className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#EBF6FA]"
+              className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#EEF2F8]"
             >
-              <MapPin size={14} className="text-[#0E7DA6]" />
+              <MapPin size={14} className="text-[#00143D]" />
             </span>
             <address className="not-italic text-sm text-[#334155] font-[family-name:var(--font-body)] leading-relaxed">
               {fullAddress}

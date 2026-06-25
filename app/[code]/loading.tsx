@@ -6,7 +6,7 @@ export default function GuideLoading() {
   return (
     <div className="min-h-screen bg-[#F7F9FB]">
       {/* Header — static, renders immediately */}
-      <header className="bg-white border-b border-[#E2EAF0] sticky top-0 z-20 shadow-[0_1px_4px_0_rgb(14_125_166_/_0.06)]">
+      <header className="bg-white border-b border-[#E2EAF0] sticky top-0 z-20 shadow-[0_1px_4px_0_rgb(0_20_61_/_0.06)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link
             href="/"
@@ -14,7 +14,7 @@ export default function GuideLoading() {
             className="group flex items-center gap-2 rounded-md -ml-1 px-1 py-1 transition-colors hover:bg-[#F7F9FB]"
           >
             <ArrowLeft size={18} aria-hidden="true" className="text-[#64748B]" />
-            <span className="font-[family-name:var(--font-heading)] font-bold text-[#0E7DA6] text-lg tracking-tight">
+            <span className="font-[family-name:var(--font-heading)] font-bold text-[#00143D] text-lg tracking-tight">
               Seazone
             </span>
           </Link>

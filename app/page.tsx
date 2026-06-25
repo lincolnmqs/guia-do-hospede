@@ -9,8 +9,8 @@ const DEMO_PROPERTIES = [
     description:
       "Vista para o oceano Atlântico, a poucos passos da praia. Experiência completa de sol e mar em Santa Catarina.",
     icon: Waves,
-    accent: "#0E7DA6",
-    accentLight: "#E0F4FB",
+    accent: "#00143D",
+    accentLight: "#EEF2F8",
     tag: "Praia",
   },
   {
@@ -48,9 +48,9 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#F7F9FB] flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-[#E2EAF0] sticky top-0 z-20 shadow-[0_1px_4px_0_rgb(14_125_166_/_0.06)]">
+      <header className="bg-white border-b border-[#E2EAF0] sticky top-0 z-20 shadow-[0_1px_4px_0_rgb(0_20_61_/_0.06)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 h-14 flex items-center justify-between">
-          <span className="font-[family-name:var(--font-heading)] font-bold text-[#0E7DA6] text-lg tracking-tight">
+          <span className="font-[family-name:var(--font-heading)] font-bold text-[#00143D] text-lg tracking-tight">
             Seazone
           </span>
           <span className="text-xs text-[#64748B] font-[family-name:var(--font-body)] hidden sm:block">
@@ -62,7 +62,7 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* ── Hero ── */}
         <section
-          className="relative overflow-hidden bg-gradient-to-br from-[#0A5F80] via-[#0E7DA6] to-[#54B3D4] text-white"
+          className="relative overflow-hidden bg-gradient-to-br from-[#00143D] via-[#001a4f] to-[#002266] text-white"
           aria-label="Apresentação"
         >
           {/* Decorative wave shapes */}
@@ -106,7 +106,7 @@ export default function LandingPage() {
 
             <a
               href="#demo"
-              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-white text-[#0E7DA6] px-7 py-3.5 text-sm font-bold shadow-[0_4px_16px_0_rgb(0_0_0_/_0.15)] transition-all hover:bg-[#F0FAFF] hover:shadow-[0_6px_24px_0_rgb(0_0_0_/_0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-white text-[#00143D] px-7 py-3.5 text-sm font-bold shadow-[0_4px_16px_0_rgb(0_0_0_/_0.15)] transition-all hover:bg-[#F0F2F8] hover:shadow-[0_6px_24px_0_rgb(0_0_0_/_0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Ver exemplos
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -123,10 +123,10 @@ export default function LandingPage() {
             {FEATURES.map(({ icon: Icon, title, description }) => (
               <div
                 key={title}
-                className="flex flex-col gap-3 rounded-[0.875rem] bg-white border border-[#E2EAF0] p-6 shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]"
+                className="flex flex-col gap-3 rounded-[0.875rem] bg-white border border-[#E2EAF0] p-6 shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E0F4FB]">
-                  <Icon className="w-5 h-5 text-[#0E7DA6]" aria-hidden="true" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF2F8]">
+                  <Icon className="w-5 h-5 text-[#00143D]" aria-hidden="true" />
                 </div>
                 <h2 className="font-[family-name:var(--font-heading)] font-semibold text-[#1F2933] text-base">
                   {title}
@@ -161,7 +161,7 @@ export default function LandingPage() {
                 <Link
                   key={code}
                   href={`/${code}`}
-                  className="group relative flex flex-col gap-5 rounded-[0.875rem] bg-white border border-[#E2EAF0] p-6 shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)] transition-all hover:shadow-[0_8px_24px_0_rgb(14_125_166_/_0.13)] hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#54B3D4]"
+                  className="group relative flex flex-col gap-5 rounded-[0.875rem] bg-white border border-[#E2EAF0] p-6 shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)] transition-all hover:shadow-[0_8px_24px_0_rgb(0_20_61_/_0.13)] hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00143D]"
                   aria-label={`Abrir guia: ${name}, ${location}`}
                 >
                   {/* Icon + Tag row */}

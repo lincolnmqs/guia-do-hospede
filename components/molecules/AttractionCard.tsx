@@ -14,14 +14,14 @@ export function AttractionCard({ name, distance, description, className }: Attra
       className={cn(
         "group relative overflow-hidden rounded-[0.875rem] bg-white border border-[#E2EAF0]",
         "p-5 transition-all duration-200",
-        "hover:shadow-[0_8px_24px_0_rgb(14_125_166_/_0.13),_0_2px_6px_0_rgb(0_0_0_/_0.06)]",
+        "hover:shadow-[0_8px_24px_0_rgb(0_20_61_/_0.13),_0_2px_6px_0_rgb(0_0_0_/_0.06)]",
         "hover:-translate-y-0.5",
         className,
       )}
     >
       <div
         aria-hidden="true"
-        className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#54B3D4] to-[#0E7DA6] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#FC5A54] to-[#00143D] opacity-0 group-hover:opacity-100 transition-opacity duration-200"
       />
       <div className="flex items-start gap-3">
         <span

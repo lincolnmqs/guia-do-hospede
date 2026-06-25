@@ -3,16 +3,16 @@
 /* ─── Seazone Design Tokens ──────────────────────────────────────────────── */
 @theme {
   /* Palette */
-  --color-sz-sky:        #54B3D4;
-  --color-sz-ocean:      #0E7DA6;
-  --color-sz-deep:       #0A5F80;
-  --color-sz-surface:    #F7F9FB;
-  --color-sz-white:      #FFFFFF;
-  --color-sz-charcoal:   #1F2933;
-  --color-sz-ink:        #334155;
-  --color-sz-muted:      #64748B;
-  --color-sz-border:     #E2EAF0;
-  --color-sz-card:       #FFFFFF;
+  --color-sz-coral-light: #FF8C89;
+  --color-sz-coral:       #FC5A54;
+  --color-sz-navy:        #00143D;
+  --color-sz-surface:     #F7F9FB;
+  --color-sz-white:       #FFFFFF;
+  --color-sz-charcoal:    #1F2933;
+  --color-sz-ink:         #334155;
+  --color-sz-muted:       #64748B;
+  --color-sz-border:      #E2EAF0;
+  --color-sz-card:        #FFFFFF;
 
   /* Semantic states */
   --color-sz-permitted:  #16A34A;
@@ -34,8 +34,8 @@
   --radius-button: 0.5rem;
 
   /* Shadows */
-  --shadow-card:  0 2px 12px 0 rgb(14 125 166 / 0.07), 0 1px 3px 0 rgb(0 0 0 / 0.04);
-  --shadow-hover: 0 8px 24px 0 rgb(14 125 166 / 0.13), 0 2px 6px 0 rgb(0 0 0 / 0.06);
+  --shadow-card:  0 2px 12px 0 rgb(0 20 61 / 0.07), 0 1px 3px 0 rgb(0 0 0 / 0.04);
+  --shadow-hover: 0 8px 24px 0 rgb(0 20 61 / 0.13), 0 2px 6px 0 rgb(0 0 0 / 0.06);
 }
 
 /* ─── Base ───────────────────────────────────────────────────────────────── */
@@ -56,9 +56,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Focus ring — ocean blue, not browser default */
+/* Focus ring — coral, not browser default */
 :focus-visible {
-  outline: 2px solid var(--color-sz-sky);
+  outline: 2px solid var(--color-sz-coral);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -67,4 +67,4 @@ body {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-sz-border); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-sz-sky); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-sz-coral); }

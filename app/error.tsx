@@ -21,7 +21,7 @@ export default function Error({
     <div className="min-h-screen bg-[#F7F9FB] flex flex-col">
       <header className="bg-white border-b border-[#E2EAF0]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 h-14 flex items-center">
-          <span className="font-[family-name:var(--font-heading)] font-bold text-[#0E7DA6] text-lg tracking-tight">
+          <span className="font-[family-name:var(--font-heading)] font-bold text-[#00143D] text-lg tracking-tight">
             Seazone
           </span>
         </div>
@@ -53,14 +53,14 @@ export default function Error({
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               onClick={reset}
-              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-[#0E7DA6] px-6 py-3 text-sm font-semibold text-white shadow-[0_2px_8px_0_rgb(14_125_166_/_0.25)] transition-all hover:bg-[#0A5F80] hover:shadow-[0_4px_16px_0_rgb(14_125_166_/_0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#54B3D4]"
+              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-[#00143D] px-6 py-3 text-sm font-semibold text-white shadow-[0_2px_8px_0_rgb(0_20_61_/_0.25)] transition-all hover:bg-[#00143D] hover:shadow-[0_4px_16px_0_rgb(0_20_61_/_0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00143D]"
             >
               <RefreshCw className="w-4 h-4" aria-hidden="true" />
               Tentar novamente
             </button>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-[0.5rem] border border-[#E2EAF0] bg-white px-6 py-3 text-sm font-semibold text-[#0E7DA6] transition-all hover:bg-[#F7F9FB] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#54B3D4]"
+              className="inline-flex items-center gap-2 rounded-[0.5rem] border border-[#E2EAF0] bg-white px-6 py-3 text-sm font-semibold text-[#00143D] transition-all hover:bg-[#F7F9FB] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00143D]"
               aria-label="Voltar para a página inicial"
             >
               <ArrowLeft className="w-4 h-4" aria-hidden="true" />

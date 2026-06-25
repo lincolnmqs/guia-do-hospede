@@ -25,12 +25,12 @@ export function PropertyDetails({ property, className }: PropertyDetailsProps) {
           <div>
             <h1
               id="property-details-title"
-              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-3xl text-[#0A5F80] leading-tight tracking-tight"
+              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-3xl text-[#00143D] leading-tight tracking-tight"
             >
               {name}
             </h1>
             <div className="mt-1.5 flex flex-wrap items-center gap-2 text-sm text-[#64748B]">
-              <span className="font-medium text-[#54B3D4] font-[family-name:var(--font-heading)]">
+              <span className="font-medium text-[#00143D] font-[family-name:var(--font-heading)]">
                 {propertyType}
               </span>
               <span aria-hidden="true" className="text-[#CBD5E1]">·</span>
