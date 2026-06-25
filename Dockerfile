@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
 
-ARG NODE_IMAGE=node:20-alpine
+# Node 22: Prisma 7's tooling targets Node >=22 (Node 20 triggers EBADENGINE).
+ARG NODE_IMAGE=node:22-alpine
 
 # ─── Stage 1: full deps (for building) ───────────────────────────────────────
 FROM ${NODE_IMAGE} AS deps
@@ -31,10 +32,12 @@ WORKDIR /tools
 ENV DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy
 COPY prisma ./prisma
 COPY prisma.config.ts ./
+# Exact versions (matching package-lock.json) so the seed's Prisma client and
+# engine never drift from the version the app was built with.
 RUN --mount=type=cache,target=/root/.npm \
     npm i --no-save --prefix /tools \
-      prisma@^7.8.0 tsx@^4.22.4 \
-      @prisma/client@^7.8.0 @prisma/adapter-pg@^7.8.0 pg@^8.22.0 zod@^4.4.3 && \
+      prisma@7.8.0 tsx@4.22.4 \
+      @prisma/client@7.8.0 @prisma/adapter-pg@7.8.0 pg@8.22.0 zod@4.4.3 && \
     npx prisma generate
 
 # ─── Stage 4: runtime ────────────────────────────────────────────────────────
