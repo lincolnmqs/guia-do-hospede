@@ -1,12 +1,17 @@
+import { cache } from "react";
 import { prisma } from "./client";
 import type { Prisma } from "@prisma/client";
 
 const include = { address: true, operational: true, rules: true, host: true } as const;
 export type PropertyWithRelations = Prisma.PropertyGetPayload<{ include: typeof include }>;
 
-export function findPropertyByCode(code: string): Promise<PropertyWithRelations | null> {
-  return prisma.property.findUnique({ where: { code: code.trim().toUpperCase() }, include });
-}
+// Wrapped in React's `cache()` so calls within the same request are deduplicated:
+// the page reads this both in `generateMetadata` and in the page body, which would
+// otherwise issue two identical Postgres queries per request.
+export const findPropertyByCode = cache(
+  (code: string): Promise<PropertyWithRelations | null> =>
+    prisma.property.findUnique({ where: { code: code.trim().toUpperCase() }, include }),
+);
 
 // Lightweight summary for listings (e.g. the landing page) — only the fields a
 // card needs, so we never ship operational/host data to a public index.
