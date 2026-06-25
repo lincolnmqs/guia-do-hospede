@@ -15,7 +15,7 @@ export function IconText({ icon: Icon, label, value, iconClassName, className }:
       <Icon
         size={16}
         aria-hidden="true"
-        className={cn("shrink-0 text-[#54B3D4]", iconClassName)}
+        className={cn("shrink-0 text-[#00143D]", iconClassName)}
       />
       {value !== undefined ? (
         <>

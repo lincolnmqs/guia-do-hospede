@@ -13,7 +13,7 @@ export function SectionTitle({ children, subtitle, className, id }: SectionTitle
       <h2
         id={id}
         className={cn(
-          "font-[family-name:var(--font-heading)] font-bold text-xl sm:text-2xl text-[#0A5F80]",
+          "font-[family-name:var(--font-heading)] font-bold text-xl sm:text-2xl text-[#00143D]",
           "tracking-tight leading-tight",
         )}
       >
@@ -26,7 +26,7 @@ export function SectionTitle({ children, subtitle, className, id }: SectionTitle
       )}
       <div
         aria-hidden="true"
-        className="mt-3 h-0.5 w-10 rounded-full bg-[#54B3D4]"
+        className="mt-3 h-0.5 w-10 rounded-full bg-[#00143D]"
       />
     </div>
   );

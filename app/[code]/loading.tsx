@@ -1,18 +1,26 @@
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { Skeleton } from "@/components/atoms/Skeleton";
 
 export default function GuideLoading() {
   return (
     <div className="min-h-screen bg-[#F7F9FB]">
-      {/* Header */}
-      <header className="bg-white border-b border-[#E2EAF0] sticky top-0 z-20 shadow-[0_1px_4px_0_rgb(14_125_166_/_0.06)]">
+      {/* Header — static, renders immediately */}
+      <header className="bg-white border-b border-[#E2EAF0] sticky top-0 z-20 shadow-[0_1px_4px_0_rgb(0_20_61_/_0.06)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-5 w-5 rounded-md" />
-            <span className="font-[family-name:var(--font-heading)] font-bold text-[#0E7DA6] text-lg tracking-tight">
+          <Link
+            href="/"
+            aria-label="Voltar para a página inicial"
+            className="group flex items-center gap-2 rounded-md -ml-1 px-1 py-1 transition-colors hover:bg-[#F7F9FB]"
+          >
+            <ArrowLeft size={18} aria-hidden="true" className="text-[#64748B]" />
+            <span className="font-[family-name:var(--font-heading)] font-bold text-[#00143D] text-lg tracking-tight">
               Seazone
             </span>
-          </div>
-          <Skeleton className="hidden sm:block h-4 w-28 rounded-md" />
+          </Link>
+          <span className="text-xs text-[#64748B] font-[family-name:var(--font-body)] hidden sm:block">
+            Guia do Hóspede
+          </span>
         </div>
       </header>
 

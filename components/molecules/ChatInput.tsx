@@ -39,7 +39,7 @@ export function ChatInput({
       onSubmit={handleSubmit}
       className={cn(
         "flex items-end gap-2 rounded-xl border border-[#E2EAF0] bg-white p-2 shadow-sm",
-        "focus-within:border-[#54B3D4] focus-within:shadow-[0_0_0_3px_rgb(84_179_212_/_0.15)]",
+        "focus-within:border-[#00143D] focus-within:shadow-[0_0_0_3px_rgb(84_179_212_/_0.15)]",
         "transition-all duration-150",
         className,
       )}
@@ -66,10 +66,10 @@ export function ChatInput({
         aria-label="Enviar mensagem"
         className={cn(
           "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
-          "bg-[#0E7DA6] text-white transition-all duration-150",
-          "hover:bg-[#0A5F80] active:scale-95",
+          "bg-[#00143D] text-white transition-all duration-150",
+          "hover:bg-[#00143D] active:scale-95",
           "disabled:opacity-40 disabled:cursor-not-allowed",
-          "focus-visible:outline-2 focus-visible:outline-[#54B3D4] focus-visible:outline-offset-2",
+          "focus-visible:outline-2 focus-visible:outline-[#00143D] focus-visible:outline-offset-2",
         )}
       >
         <Send size={15} aria-hidden="true" />

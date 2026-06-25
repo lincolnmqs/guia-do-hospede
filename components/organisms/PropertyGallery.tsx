@@ -84,7 +84,7 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
           type="button"
           onClick={() => open(0)}
           aria-label={`Ampliar fotos de ${name}`}
-          className="group block sm:hidden relative w-full h-72 cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#54B3D4]"
+          className="group block sm:hidden relative w-full h-72 cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#00143D]"
         >
           <GalleryImage src={primary} alt={`Foto principal de ${name}`} priority sizes="100vw" />
           <ZoomHint />
@@ -100,7 +100,7 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
             type="button"
             onClick={() => open(0)}
             aria-label={`Ampliar foto principal de ${name}`}
-            className="group relative overflow-hidden rounded-l-[0.875rem] cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#54B3D4]"
+            className="group relative overflow-hidden rounded-l-[0.875rem] cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#00143D]"
           >
             <GalleryImage
               src={primary}
@@ -128,7 +128,7 @@ export function PropertyGallery({ images, name, className }: PropertyGalleryProp
                         : `Ampliar foto ${i + 2} de ${name}`
                     }
                     className={cn(
-                      "group relative flex-1 overflow-hidden cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#54B3D4]",
+                      "group relative flex-1 overflow-hidden cursor-zoom-in focus-visible:outline-2 focus-visible:outline-[#00143D]",
                       i === 0 && "rounded-tr-[0.875rem]",
                       isLast && "rounded-br-[0.875rem]",
                     )}
