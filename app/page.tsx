@@ -1,30 +1,34 @@
 import Link from "next/link";
-import { MapPin, Waves, Mountain, ArrowRight, Sparkles, MessageSquare, BookOpen } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { MapPin, Waves, Mountain, Home, ArrowRight, Sparkles, MessageSquare, BookOpen } from "lucide-react";
+import { findAllProperties, type PropertySummary } from "@/lib/db/property.repository";
 
-const DEMO_PROPERTIES = [
-  {
-    code: "FLN001",
-    name: "Apartamento Beira-Mar",
-    location: "Florianópolis, SC",
-    description:
-      "Vista para o oceano Atlântico, a poucos passos da praia. Experiência completa de sol e mar em Santa Catarina.",
-    icon: Waves,
-    accent: "#0E7DA6",
-    accentLight: "#E0F4FB",
-    tag: "Praia",
-  },
-  {
-    code: "GRM001",
-    name: "Chalé Serra",
-    location: "Gramado, RS",
-    description:
-      "Aconchego na Serra Gaúcha, entre pinheiros e charme europeu. Perfeito para relaxar e explorar a natureza.",
-    icon: Mountain,
-    accent: "#16A34A",
-    accentLight: "#DCFCE7",
-    tag: "Serra",
-  },
-] as const;
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+// Card data (name, location, capacity) is read from the database — the source of
+// truth. Only the purely presentational bits live here, keyed by code with a
+// neutral fallback so any newly seeded property still renders a sensible card.
+type Visual = { icon: LucideIcon; accent: string; accentLight: string; tag: string };
+
+const VISUALS: Record<string, Visual> = {
+  FLN001: { icon: Waves, accent: "#0E7DA6", accentLight: "#E0F4FB", tag: "Praia" },
+  GRM001: { icon: Mountain, accent: "#16A34A", accentLight: "#DCFCE7", tag: "Serra" },
+};
+
+function visualFor(p: PropertySummary): Visual {
+  return VISUALS[p.code] ?? { icon: Home, accent: "#0E7DA6", accentLight: "#E0F4FB", tag: p.propertyType };
+}
+
+function locationOf(p: PropertySummary): string {
+  return [p.city, p.state].filter(Boolean).join(", ");
+}
+
+function descriptionOf(p: PropertySummary): string {
+  const rooms = `${p.bedroomQuantity} ${p.bedroomQuantity === 1 ? "quarto" : "quartos"}`;
+  const place = p.neighborhood ? `${p.propertyType} em ${p.neighborhood}` : p.propertyType;
+  return `${place} · ${rooms} · até ${p.guestCapacity} hóspedes.`;
+}
 
 const FEATURES = [
   {
@@ -44,7 +48,14 @@ const FEATURES = [
   },
 ] as const;
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  // A public index should never hard-crash if the database is briefly down;
+  // fall back to an empty list and let the section render its own empty state.
+  const properties = await findAllProperties().catch((err) => {
+    console.error("[landing] failed to load properties:", err);
+    return [] as PropertySummary[];
+  });
+
   return (
     <div className="min-h-screen bg-[#F7F9FB] flex flex-col">
       {/* Header */}
@@ -160,9 +171,19 @@ export default function LandingPage() {
             </p>
           </div>
 
+          {properties.length === 0 ? (
+            <p className="rounded-[0.875rem] border border-dashed border-[#CBD5E1] bg-white p-8 text-center text-sm text-[#64748B] font-[family-name:var(--font-body)]">
+              Nenhum imóvel disponível no momento.
+            </p>
+          ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {DEMO_PROPERTIES.map(
-              ({ code, name, location, description, icon: Icon, accent, accentLight, tag }) => (
+            {properties.map((property) => {
+              const { code } = property;
+              const name = property.name;
+              const location = locationOf(property);
+              const description = descriptionOf(property);
+              const { icon: Icon, accent, accentLight, tag } = visualFor(property);
+              return (
                 <Link
                   key={code}
                   href={`/${code}`}
@@ -220,9 +241,10 @@ export default function LandingPage() {
                     </span>
                   </div>
                 </Link>
-              )
-            )}
+              );
+            })}
           </div>
+          )}
         </section>
       </main>
 
