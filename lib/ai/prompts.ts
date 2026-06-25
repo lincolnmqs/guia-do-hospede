@@ -1,5 +1,6 @@
 import type { PropertyWithRelations } from "../db/property.repository";
 import type { ExperienceGuideContent } from "../schemas/experience-guide";
+import { parseAmenities } from "../schemas/property";
 import { amenityLabel } from "../format";
 
 // ---------------------------------------------------------------------------
@@ -13,11 +14,7 @@ export function buildChatSystemPrompt(
   const { address, operational, rules, host } = property;
 
   // --- Amenities ---
-  const amenitiesRaw =
-    property.amenities && typeof property.amenities === "object"
-      ? (property.amenities as Record<string, boolean>)
-      : {};
-  const amenityList = Object.entries(amenitiesRaw)
+  const amenityList = Object.entries(parseAmenities(property.amenities))
     .filter(([, v]) => v)
     .map(([k]) => amenityLabel(k))
     .join(", ");

@@ -4,6 +4,7 @@ import { findPropertyByCode } from "@/lib/db/property.repository";
 import { getOrCreateExperienceGuide } from "@/lib/ai/generate-experience-guide";
 import { streamChatResponse } from "@/lib/ai/chat";
 import { rateLimit } from "@/lib/rate-limit";
+import { clientIp } from "@/lib/http";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,12 +12,6 @@ export const dynamic = "force-dynamic";
 // Protects the OpenAI-backed endpoint from abuse: max 20 messages/minute per IP.
 const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 60_000;
-
-function clientIp(req: Request): string {
-  const fwd = req.headers.get("x-forwarded-for");
-  if (fwd) return fwd.split(",")[0].trim();
-  return req.headers.get("x-real-ip") ?? "unknown";
-}
 
 const messagesSchema = z
   .array(
@@ -27,6 +22,8 @@ const messagesSchema = z
   )
   .min(1)
   .max(50);
+
+type ChatRequestMessages = z.infer<typeof messagesSchema>;
 
 export async function POST(
   req: Request,
@@ -42,7 +39,7 @@ export async function POST(
     );
   }
 
-  let messages: { role: "user" | "assistant"; content: string }[];
+  let messages: ChatRequestMessages;
   try {
     const body = await req.json();
     const parsed = messagesSchema.safeParse(body.messages);
