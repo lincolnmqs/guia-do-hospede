@@ -66,7 +66,10 @@ export async function POST(
   }
 
   try {
-    const guide = await getOrCreateExperienceGuide(property).catch(() => null);
+    const guide = await getOrCreateExperienceGuide(property).catch((err) => {
+      console.error(`[chat] guide generation failed for ${code}:`, err);
+      return null;
+    });
     const stream = streamChatResponse({ property, guide, messages });
 
     return new Response(stream, {
@@ -76,7 +79,8 @@ export async function POST(
         Connection: "keep-alive",
       },
     });
-  } catch {
+  } catch (err) {
+    console.error(`[chat] request failed for ${code}:`, err);
     return NextResponse.json(
       { error: "Falha ao processar a solicitação. Tente novamente." },
       { status: 500 },
