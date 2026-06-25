@@ -7,7 +7,7 @@ export default function NotFound() {
       {/* Header */}
       <header className="bg-white border-b border-[#E2EAF0]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 h-14 flex items-center">
-          <span className="font-[family-name:var(--font-heading)] font-bold text-[#0E7DA6] text-lg tracking-tight">
+          <span className="font-[family-name:var(--font-heading)] font-bold text-[#00143D] text-lg tracking-tight">
             Seazone
           </span>
         </div>
@@ -19,16 +19,16 @@ export default function NotFound() {
           {/* Icon cluster */}
           <div className="relative mx-auto mb-8 w-28 h-28 flex items-center justify-center">
             {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full bg-[#E0F4FB] opacity-60" />
+            <div className="absolute inset-0 rounded-full bg-[#EEF2F8] opacity-60" />
             {/* Inner ring */}
-            <div className="absolute inset-4 rounded-full bg-[#BAE6F6] opacity-70" />
+            <div className="absolute inset-4 rounded-full bg-[#C0CBE6] opacity-70" />
             {/* Icon */}
-            <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-[#0E7DA6] shadow-[0_4px_16px_0_rgb(14_125_166_/_0.35)]">
+            <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-[#00143D] shadow-[0_4px_16px_0_rgb(0_20_61_/_0.35)]">
               <MapPin className="w-7 h-7 text-white" aria-hidden="true" />
             </div>
             {/* Decorative compass */}
             <div className="absolute -top-1 -right-1 flex items-center justify-center w-8 h-8 rounded-full bg-white border border-[#E2EAF0] shadow-sm">
-              <Compass className="w-4 h-4 text-[#54B3D4]" aria-hidden="true" />
+              <Compass className="w-4 h-4 text-[#00143D]" aria-hidden="true" />
             </div>
           </div>
 
@@ -49,7 +49,7 @@ export default function NotFound() {
           {/* CTA */}
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-[0.5rem] bg-[#0E7DA6] px-6 py-3 text-sm font-semibold text-white shadow-[0_2px_8px_0_rgb(14_125_166_/_0.25)] transition-all hover:bg-[#0A5F80] hover:shadow-[0_4px_16px_0_rgb(14_125_166_/_0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#54B3D4]"
+            className="inline-flex items-center gap-2 rounded-[0.5rem] bg-[#00143D] px-6 py-3 text-sm font-semibold text-white shadow-[0_2px_8px_0_rgb(0_20_61_/_0.25)] transition-all hover:bg-[#00143D] hover:shadow-[0_4px_16px_0_rgb(0_20_61_/_0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00143D]"
             aria-label="Voltar para a página inicial"
           >
             <ArrowLeft className="w-4 h-4" aria-hidden="true" />

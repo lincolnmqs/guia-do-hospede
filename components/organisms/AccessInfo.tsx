@@ -9,10 +9,13 @@ interface AccessInfoProps {
   className?: string;
 }
 
+// Keys mirror the values stored in `operational.propertyAccessType`
+// (see the reference data / seed): "smart_lock", "keybox", etc.
 const ACCESS_TYPE_LABELS: Record<string, string> = {
   key:           "Chave física",
   smart_lock:    "Fechadura inteligente",
-  key_box:       "Cofre de chave",
+  keybox:        "Cofre de chaves",
+  key_box:       "Cofre de chaves",
   host_handover: "Entrega pelo anfitrião",
 };
 
@@ -40,17 +43,17 @@ export function AccessInfo({ operational, className }: AccessInfoProps) {
       </SectionTitle>
 
       {/* WiFi block */}
-      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]">
-        <div className="flex items-center gap-2 bg-gradient-to-r from-[#EBF6FA] to-[#F0F9FF] px-5 py-3 border-b border-[#E2EAF0]">
-          <Wifi size={16} aria-hidden="true" className="text-[#0E7DA6]" />
-          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#0A5F80] text-sm">
+      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]">
+        <div className="flex items-center gap-2 bg-gradient-to-r from-[#EEF2F8] to-[#F0F2F8] px-5 py-3 border-b border-[#E2EAF0]">
+          <Wifi size={16} aria-hidden="true" className="text-[#00143D]" />
+          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#00143D] text-sm">
             Wi-Fi
           </h3>
         </div>
         <dl className="px-5 divide-y divide-[#E2EAF0]">
           <InfoRow label="Rede" value={wifiNetwork} />
           <InfoRow label="Senha" value={
-            <span className="font-mono font-medium tracking-wider text-[#0E7DA6]">
+            <span className="font-mono font-medium tracking-wider text-[#00143D]">
               {wifiPassword}
             </span>
           } />
@@ -58,10 +61,10 @@ export function AccessInfo({ operational, className }: AccessInfoProps) {
       </div>
 
       {/* Access block */}
-      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]">
-        <div className="flex items-center gap-2 bg-gradient-to-r from-[#EBF6FA] to-[#F0F9FF] px-5 py-3 border-b border-[#E2EAF0]">
-          <Lock size={16} aria-hidden="true" className="text-[#0E7DA6]" />
-          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#0A5F80] text-sm">
+      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]">
+        <div className="flex items-center gap-2 bg-gradient-to-r from-[#EEF2F8] to-[#F0F2F8] px-5 py-3 border-b border-[#E2EAF0]">
+          <Lock size={16} aria-hidden="true" className="text-[#00143D]" />
+          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#00143D] text-sm">
             Entrada
           </h3>
           {isSelfCheckin && (
@@ -74,7 +77,7 @@ export function AccessInfo({ operational, className }: AccessInfoProps) {
           <InfoRow icon={KeyRound} label="Tipo de acesso" value={accessTypeLabel} />
           {propertyPassword && (
             <InfoRow label="Código" value={
-              <span className="font-mono font-medium tracking-widest text-[#0E7DA6] text-base">
+              <span className="font-mono font-medium tracking-widest text-[#00143D] text-base">
                 {propertyPassword}
               </span>
             } />
@@ -87,11 +90,11 @@ export function AccessInfo({ operational, className }: AccessInfoProps) {
       {hasParkingSpot && (
         <div
           aria-label="Estacionamento"
-          className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]"
+          className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]"
         >
-          <div className="flex items-center gap-2 bg-gradient-to-r from-[#EBF6FA] to-[#F0F9FF] px-5 py-3 border-b border-[#E2EAF0]">
-            <Car size={16} aria-hidden="true" className="text-[#0E7DA6]" />
-            <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#0A5F80] text-sm">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-[#EEF2F8] to-[#F0F2F8] px-5 py-3 border-b border-[#E2EAF0]">
+            <Car size={16} aria-hidden="true" className="text-[#00143D]" />
+            <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#00143D] text-sm">
               Estacionamento
             </h3>
           </div>

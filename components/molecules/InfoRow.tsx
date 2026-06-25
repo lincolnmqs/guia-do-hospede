@@ -19,9 +19,9 @@ export function InfoRow({ icon: Icon, label, value, className }: InfoRowProps) {
       {Icon && (
         <span
           aria-hidden="true"
-          className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#EBF6FA]"
+          className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#EEF2F8]"
         >
-          <Icon size={14} className="text-[#0E7DA6]" />
+          <Icon size={14} className="text-[#00143D]" />
         </span>
       )}
       <div className="min-w-0 flex-1">

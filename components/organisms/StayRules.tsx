@@ -30,10 +30,10 @@ export function StayRules({ rules, className }: StayRulesProps) {
       </SectionTitle>
 
       {/* Check-in / Check-out times */}
-      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]">
-        <div className="flex items-center gap-2 bg-gradient-to-r from-[#EBF6FA] to-[#F0F9FF] px-5 py-3 border-b border-[#E2EAF0]">
-          <Clock size={16} aria-hidden="true" className="text-[#0E7DA6]" />
-          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#0A5F80] text-sm">
+      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]">
+        <div className="flex items-center gap-2 bg-gradient-to-r from-[#EEF2F8] to-[#F0F2F8] px-5 py-3 border-b border-[#E2EAF0]">
+          <Clock size={16} aria-hidden="true" className="text-[#00143D]" />
+          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#00143D] text-sm">
             Horários
           </h3>
         </div>
@@ -44,9 +44,9 @@ export function StayRules({ rules, className }: StayRulesProps) {
       </div>
 
       {/* Policies */}
-      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]">
-        <div className="px-5 py-3 border-b border-[#E2EAF0] bg-gradient-to-r from-[#EBF6FA] to-[#F0F9FF]">
-          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#0A5F80] text-sm">
+      <div className="rounded-[0.875rem] bg-white border border-[#E2EAF0] overflow-hidden shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]">
+        <div className="px-5 py-3 border-b border-[#E2EAF0] bg-gradient-to-r from-[#EEF2F8] to-[#F0F2F8]">
+          <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#00143D] text-sm">
             Políticas
           </h3>
         </div>

@@ -1,6 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import {
+  SSE_DATA_PREFIX,
+  SSE_FRAME_DELIMITER,
+  SSE_DONE,
+} from "@/lib/ai/sse";
 
 export interface ChatStreamMessage {
   role: "user" | "assistant";
@@ -21,12 +26,23 @@ export function useChatStream({ code }: UseChatStreamOptions): UseChatStreamRetu
   const [messages, setMessages] = useState<ChatStreamMessage[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
 
+  // Mirror the latest values into refs so `sendMessage` can read them without
+  // listing them as dependencies — that keeps its identity stable across the
+  // many `messages` updates streaming produces (otherwise it'd be recreated on
+  // every token, defeating any future memoization of the consuming component).
+  const messagesRef = useRef(messages);
+  const isStreamingRef = useRef(isStreaming);
+  useEffect(() => {
+    messagesRef.current = messages;
+    isStreamingRef.current = isStreaming;
+  });
+
   const sendMessage = useCallback(
     async (text: string) => {
-      if (isStreaming) return;
+      if (isStreamingRef.current) return;
 
       const userMessage: ChatStreamMessage = { role: "user", content: text };
-      const nextMessages: ChatStreamMessage[] = [...messages, userMessage];
+      const nextMessages: ChatStreamMessage[] = [...messagesRef.current, userMessage];
 
       setMessages(nextMessages);
       setIsStreaming(true);
@@ -68,17 +84,17 @@ export function useChatStream({ code }: UseChatStreamOptions): UseChatStreamRetu
 
           buffer += decoder.decode(value, { stream: true });
 
-          // Process all complete SSE frames (terminated by \n\n)
+          // Process all complete SSE frames (terminated by the frame delimiter)
           let boundary: number;
-          while ((boundary = buffer.indexOf("\n\n")) !== -1) {
+          while ((boundary = buffer.indexOf(SSE_FRAME_DELIMITER)) !== -1) {
             const frame = buffer.slice(0, boundary);
-            buffer = buffer.slice(boundary + 2);
+            buffer = buffer.slice(boundary + SSE_FRAME_DELIMITER.length);
 
             for (const line of frame.split("\n")) {
-              if (!line.startsWith("data:")) continue;
-              const payload = line.slice(5).trim();
+              if (!line.startsWith(SSE_DATA_PREFIX)) continue;
+              const payload = line.slice(SSE_DATA_PREFIX.length).trim();
 
-              if (payload === "[DONE]") {
+              if (payload === SSE_DONE) {
                 // Stream complete — finalize (no-op, content already accumulated)
                 break;
               }
@@ -132,7 +148,7 @@ export function useChatStream({ code }: UseChatStreamOptions): UseChatStreamRetu
         setIsStreaming(false);
       }
     },
-    [code, messages, isStreaming],
+    [code],
   );
 
   return { messages, isStreaming, sendMessage };

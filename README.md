@@ -6,7 +6,7 @@ Plataforma web que entrega a cada hóspede um guia personalizado e enriquecido p
 
 ## Demo
 
-> **URL pública:** `https://guia-do-hospede.example.com` _(substitua pelo seu domínio após o deploy)_
+> **URL pública:** `https://guia-do-hospede.projectsync.com.br`
 
 Imóveis de exemplo disponíveis após rodar o seed:
 
@@ -55,6 +55,18 @@ O system prompt do assistente injeta todos os dados estruturados do imóvel (end
 ### Streaming SSE no chat
 
 A rota `POST /api/properties/[code]/chat` usa a API de streaming da OpenAI (`stream: true`) e converte o `AsyncIterable` em um `ReadableStream<Uint8Array>` com tokens SSE progressivos. No cliente, o hook `useChatStream` consome esse stream token a token, atualizando o estado React incrementalmente — o hóspede vê a resposta crescer em tempo real.
+
+### Dados de seed em modelo externo (não no código)
+
+Os dados dos imóveis vivem em `prisma/data/properties.json` — um **modelo de dados**, não literais espalhados no back-end. O `prisma/seed.ts` é pura orquestração: carrega o JSON, **valida com Zod** (`lib/schemas/property-seed.ts`, falha rápido se o arquivo estiver malformado) e faz **upsert idempotente** (cria quando novo, edita quando existente). Cadastrar um novo imóvel é adicionar uma entrada no JSON — nenhuma mudança de código.
+
+### Armazenamento de imagens em object storage (MinIO/S3)
+
+As fotos dos imóveis são **self-hosted** em um bucket MinIO (S3-compatível), em vez de hotlinks externos. O banco persiste apenas **URLs públicas estáveis** (nunca binários), derivadas do código do imóvel (`properties/<CODE>/<n>.jpg`). O script `npm run images:upload` (`scripts/seed-images.ts`) envia os bytes uma única vez e garante a policy de leitura pública; `lib/storage/minio.ts` encapsula o client. As URLs são servidas via `next/image` (host liberado em `next.config.ts`, derivado de `MINIO_ENDPOINT`), com `priority` na hero, `sizes` corretos e cache imutável.
+
+### Rate limiting do chat
+
+A rota de chat (que consome a OpenAI) é protegida por um rate limiter in-memory (`lib/rate-limit.ts`): 20 mensagens/minuto por IP, respondendo `429` com `Retry-After`. In-memory é suficiente para o alvo single-instance (VPS/Docker); um deploy horizontal trocaria por um store compartilhado atrás da mesma interface.
 
 ### Atomic Design
 
@@ -141,6 +153,12 @@ Copie `.env.example` para `.env` e preencha:
 | `DATABASE_URL` | Sim | Connection string PostgreSQL | `postgresql://guia:guia@localhost:5432/guia?schema=public` |
 | `OPENAI_API_KEY` | Sim | Chave da API OpenAI | — |
 | `OPENAI_MODEL` | Não | Modelo OpenAI a usar | `gpt-4o-mini` |
+| `MINIO_ENDPOINT` | Não¹ | Endpoint do object storage (S3-compatível) | — |
+| `MINIO_ACCESS_KEY` | Não¹ | Access key do MinIO | — |
+| `MINIO_SECRET_KEY` | Não¹ | Secret key do MinIO | — |
+| `MINIO_BUCKET` | Não | Bucket das imagens | `guia-do-hospede` |
+
+¹ Necessárias apenas para (re)enviar imagens com `npm run images:upload`. Em runtime a app serve as URLs já persistidas no banco, sem depender do MinIO.
 
 ```bash
 cp .env.example .env

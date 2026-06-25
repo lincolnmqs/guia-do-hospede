@@ -30,7 +30,7 @@ function GuideSkeleton() {
       className="space-y-10"
     >
       {/* Welcome message skeleton */}
-      <div className="rounded-[0.875rem] border border-[#E2EAF0] bg-white p-6 shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]">
+      <div className="rounded-[0.875rem] border border-[#E2EAF0] bg-white p-6 shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]">
         <div className="flex items-center gap-3 mb-4">
           <Skeleton className="h-8 w-8 rounded-xl" />
           <Skeleton className="h-6 w-48 rounded-md" />
@@ -137,23 +137,23 @@ function SeasonalTip({ tip }: { tip: string }) {
       aria-label="Dica da temporada"
       className={cn(
         "relative overflow-hidden rounded-[0.875rem] p-5",
-        "bg-gradient-to-br from-[#EBF6FA] to-[#F7F9FB]",
-        "border border-[#C7E8F4]",
+        "bg-gradient-to-br from-[#EEF2F8] to-[#F7F9FB]",
+        "border border-[#D0D8ED]",
       )}
     >
       <div
         aria-hidden="true"
-        className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#54B3D4] to-[#0E7DA6]"
+        className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#FC5A54] to-[#00143D]"
       />
       <div className="flex items-start gap-3">
         <span
           aria-hidden="true"
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm"
         >
-          <Sparkles size={15} className="text-[#0E7DA6]" />
+          <Sparkles size={15} className="text-[#00143D]" />
         </span>
         <div>
-          <p className="text-xs font-semibold font-[family-name:var(--font-heading)] text-[#0E7DA6] uppercase tracking-wide mb-1">
+          <p className="text-xs font-semibold font-[family-name:var(--font-heading)] text-[#00143D] uppercase tracking-wide mb-1">
             Dica da temporada
           </p>
           <p className="text-sm text-[#334155] font-[family-name:var(--font-body)] leading-relaxed">
@@ -228,16 +228,16 @@ export function ExperienceGuide({ code }: ExperienceGuideProps) {
       <div
         className={cn(
           "relative overflow-hidden rounded-[0.875rem] bg-white p-6",
-          "border border-[#E2EAF0] shadow-[0_2px_12px_0_rgb(14_125_166_/_0.07)]",
+          "border border-[#E2EAF0] shadow-[0_2px_12px_0_rgb(0_20_61_/_0.07)]",
         )}
       >
         <div
           aria-hidden="true"
-          className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#54B3D4] to-[#0E7DA6]"
+          className="absolute top-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#FC5A54] to-[#00143D]"
         />
         <div className="flex items-center gap-2 mb-3">
-          <Sparkles size={16} className="text-[#0E7DA6]" aria-hidden="true" />
-          <span className="text-xs font-semibold font-[family-name:var(--font-heading)] text-[#0E7DA6] uppercase tracking-wider">
+          <Sparkles size={16} className="text-[#00143D]" aria-hidden="true" />
+          <span className="text-xs font-semibold font-[family-name:var(--font-heading)] text-[#00143D] uppercase tracking-wider">
             Guia personalizado
           </span>
         </div>
